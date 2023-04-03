@@ -5,6 +5,8 @@ import com.example.muuniversitybot.entity.User;
 import com.example.muuniversitybot.entity.repository.UserRepository;
 import com.example.muuniversitybot.service.ButtonService;
 import com.example.muuniversitybot.service.UserService;
+import com.example.muuniversitybot.util.ButtonUtils;
+import com.example.muuniversitybot.util.RoleUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
@@ -16,7 +18,9 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Component
@@ -42,14 +46,76 @@ public class MainService extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         User user = userService.cretaeOrGetUser(update);
-        if (user.getIsUser() && user.getIsAdmin()){
+        String chatId = userService.getChatId(update);
+        String text = userService.getText(update);
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(chatId);
 
-        }else if (user.getIsAdmin()){
+        if (user.getOnProfile().equals(RoleUtils.USER)) {
+            if (text.equals("/start")) {
+                userStartScenario(sendMessage, user);
+                return;
+            }
 
-        }else if (user.getIsUser()){
+            if (text.equals(ButtonUtils.getResult)){
 
-        }else {
+                return;
+            }
+            if (text.equals(ButtonUtils.lastYearResult)){
 
+                return;
+            }
+            if (text.equals(ButtonUtils.resultByDirections)){
+
+                return;
+            }
+            if (text.equals(ButtonUtils.opportunitiesByScore)){
+
+                return;
+            }
+            if (text.equals(ButtonUtils.currencyCourse)){
+
+                return;
+            }
+            if (text.equals(ButtonUtils.prayerTimes)){
+
+                return;
+            }
+            sendMessageExecutor(sendMessage);
+            return;
+        } else {
+
+            sendMessageExecutor(sendMessage);
+            return;
         }
+    }
+
+
+    private void sendMessageExecutor(SendMessage sendMessage) {
+        try {
+            execute(sendMessage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void userStartScenario(SendMessage sendMessage, User currentUser) {
+        sendMessage.setText("Asosiy menyu");
+        ArrayList<String> buttons = new ArrayList<>(List.of(
+                ButtonUtils.getResult,
+                ButtonUtils.lastYearResult,
+                ButtonUtils.resultByDirections,
+                ButtonUtils.opportunitiesByScore,
+                ButtonUtils.currencyCourse,
+                ButtonUtils.prayerTimes
+        ));
+        if (currentUser.getIsUser() && currentUser.getIsAdmin()){
+            buttons.add(ButtonUtils.changeProfile);
+        }
+        sendMessage.setReplyMarkup(buttonService.createButtons(
+                2,
+                buttons
+        ));
     }
 }

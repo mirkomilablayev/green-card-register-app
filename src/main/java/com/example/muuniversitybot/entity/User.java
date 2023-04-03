@@ -1,7 +1,6 @@
 package com.example.muuniversitybot.entity;
 
 import com.example.muuniversitybot.util.RoleUtils;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,5 +27,6 @@ public class User {
     private Boolean isUser = true;
     private Boolean isAdmin = false;
     private String onProfile = RoleUtils.USER;
+    private String step;
 
 }
