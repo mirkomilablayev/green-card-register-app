@@ -16,6 +16,11 @@ public class BotConfiguration {
     @Value("${bot.token}")
     private String token;
 
+    @Value("${bot.adminsecret}")
+    private String adminSecret;
+    @Value("${bot.adminpassword}")
+    private String adminSecretPassword;
+
 
 
 

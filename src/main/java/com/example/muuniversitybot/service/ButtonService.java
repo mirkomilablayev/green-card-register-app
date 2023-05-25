@@ -19,6 +19,16 @@ public class ButtonService {
                 .keyboardRow(new KeyboardRow(new ArrayList<>(Arrays.asList(new KeyboardButton(buttonName))))).build();
     }
 
+    public ReplyKeyboardMarkup createButtonShareContact(){
+        return ReplyKeyboardMarkup.builder()
+                .resizeKeyboard(true)
+                .keyboardRow(new KeyboardRow(Arrays.asList(KeyboardButton.builder()
+                                .requestContact(true)
+                                .text("Telefon Raqam \uD83D\uDCDE")
+                        .build())))
+                .build();
+    }
+
     public ReplyKeyboardMarkup createButtons(int countPerLine, List<String> buttonNames) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setResizeKeyboard(true);
@@ -43,6 +53,8 @@ public class ButtonService {
         replyKeyboardMarkup.setKeyboard(keyboardRowList);
         return replyKeyboardMarkup;
     }
+
+
 
 
 }

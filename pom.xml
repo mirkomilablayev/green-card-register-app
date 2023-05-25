@@ -14,7 +14,7 @@
 	<name>mu-university-bot</name>
 	<description>mu-university-bot</description>
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -70,6 +70,11 @@
 			<groupId>com.itextpdf</groupId>
 			<artifactId>io</artifactId>
 			<version>7.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.14.1</version>
 		</dependency>
 	</dependencies>
 
